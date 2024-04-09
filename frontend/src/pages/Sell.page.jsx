@@ -1,4 +1,4 @@
-const Ads = () => {
+const Sell = () => {
   return (
     <div>
 
@@ -6,4 +6,4 @@ const Ads = () => {
   )
 }
 
-export default Ads
+export default Sell

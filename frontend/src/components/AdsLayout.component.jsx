@@ -5,18 +5,13 @@ import { Outlet } from 'react-router-dom';
 const AdsLayout = () => {
   return (
     <div>
-      <Nav className="pt-3 text-color-primary" variant="tabs" defaultActiveKey="sell">
-
+      <Nav className="pt-3 justify-content-center" variant="tabs" defaultActiveKey="sell">
         <LinkContainer to="sell" eventKey="sell">
           <Nav.Link>Продаж</Nav.Link>
         </LinkContainer>
-
-
         <LinkContainer to="services">
           <Nav.Link>Послуги</Nav.Link>
         </LinkContainer>
-
-
         <LinkContainer to="vacancies">
           <Nav.Link>Вакансії</Nav.Link>
         </LinkContainer>
@@ -26,4 +21,4 @@ const AdsLayout = () => {
   )
 }
 
-export default AdsLayout
+export default AdsLayout;
