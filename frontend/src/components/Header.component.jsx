@@ -7,33 +7,34 @@ import { LinkContainer } from 'react-router-bootstrap'
 const Header = () => {
   return (
     <header>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+      <Navbar collapseOnSelect expand="lg" className="bg-body-secondary">
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand href="#">
               <img src={logo} alt="site logo" />
             </Navbar.Brand>
           </LinkContainer>
-
-          <Nav.Link className="ms-auto me-3 me-lg-0 order-lg-2">
-            <i className="fa-regular fa-user"></i> Username
-          </Nav.Link>
+          <LinkContainer to="user-profile">
+            <Nav.Link className="ms-auto me-3 me-lg-0 order-lg-2">
+              <i className="fa-regular fa-user"></i> Username
+            </Nav.Link>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
               <LinkContainer to="/">
                 <Nav.Link>Новини</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/ads">
+              <LinkContainer to="ads">
                 <Nav.Link>Оголошення</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/community">
+              <LinkContainer to="community">
                 <Nav.Link>Товариство</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/about-us">
+              <LinkContainer to="about-us">
                 <Nav.Link>Про нас</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/payments">
+              <LinkContainer to="payments">
                 <Nav.Link>Оплата</Nav.Link>
               </LinkContainer>
             </Nav>
