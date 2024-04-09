@@ -8,6 +8,7 @@ import AboutUs from './pages/AboutUs.page';
 import Payments from './pages/Payments.page';
 import UserProfile from './pages/UserProfile.page';
 import AdsLayout from './components/AdsLayout.component';
+import Services from './pages/Services.page';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="ads" element={<AdsLayout />}>
               <Route index element={<Navigate to="sell" />} />
               <Route path="sell" element={<Sell />} />
-              <Route path="services" element={<Sell />} />
+              <Route path="services" element={<Services />} />
               <Route path="vacancies" element={<Sell />} />
             </Route>
             <Route path="community" element={<Community />} />
