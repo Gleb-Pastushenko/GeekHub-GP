@@ -1,14 +1,18 @@
 import { Navbar, Nav, Container } from 'react-bootstrap'
 
+import logo from '../assets/site-logo.png'
+
 const Header = () => {
   return (
     <header>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand href="/">
-            СТ Лісова Поляна
+            <img src={logo} alt="site logo" />
           </Navbar.Brand>
-          <Navbar.Text className="ms-auto me-3 me-lg-0 order-lg-2">👤 Username</Navbar.Text>
+          <Nav.Link className="ms-auto me-3 me-lg-0 order-lg-2">
+            <i className="fa-regular fa-user"></i> Username
+          </Nav.Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
