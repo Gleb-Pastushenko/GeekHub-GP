@@ -9,9 +9,12 @@ const Header = () => {
     <header>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#">
-            <img src={logo} alt="site logo" />
-          </Navbar.Brand>
+          <LinkContainer to="/">
+            <Navbar.Brand href="#">
+              <img src={logo} alt="site logo" />
+            </Navbar.Brand>
+          </LinkContainer>
+
           <Nav.Link className="ms-auto me-3 me-lg-0 order-lg-2">
             <i className="fa-regular fa-user"></i> Username
           </Nav.Link>
@@ -19,19 +22,19 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
               <LinkContainer to="/">
-                <Nav.Link to="/">Новини</Nav.Link>
+                <Nav.Link>Новини</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/ads">
-                <Nav.Link to="/ads">Оголошення</Nav.Link>
+                <Nav.Link>Оголошення</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/community">
-                <Nav.Link to="/community">Товариство</Nav.Link>
+                <Nav.Link>Товариство</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/about-us">
-                <Nav.Link to="/about-us">Про нас</Nav.Link>
+                <Nav.Link>Про нас</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/payments">
-                <Nav.Link to="/payments">Оплата</Nav.Link>
+                <Nav.Link>Оплата</Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

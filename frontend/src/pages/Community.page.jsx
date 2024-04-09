@@ -1,9 +1,8 @@
-const community = () => {
+const Community = () => {
   return (
     <div>
 
     </div>
   )
 }
-
-export default community
+export default Community
