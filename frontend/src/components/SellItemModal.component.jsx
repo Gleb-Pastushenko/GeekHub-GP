@@ -1,7 +1,7 @@
 import { Modal, Carousel, Image, Button } from 'react-bootstrap';
 
-const SellItemModal = (props) => {
-  const { itemData } = props;
+const SellItemModal = (_props) => {
+  const { itemData, ...props } = _props;
 
   return (
     <Modal
@@ -18,7 +18,7 @@ const SellItemModal = (props) => {
       <Modal.Body>
         <Carousel>
           {itemData.photos?.map((item, idx) => (
-            <Carousel.Item>
+            <Carousel.Item key={idx}>
               <Image src={`/ads-for-sell/photos/${itemData._id}/${item}`} height="600px" />
             </Carousel.Item>
           ))}

@@ -1,19 +1,24 @@
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
+import SellItemCard from '../components/SellItemCard.component';
 import SellItemModal from '../components/SellItemModal.component';
+import SellItemCreateModal from '../components/SellItemCreateModal.component';
 import { adsForSell } from '../assets/ads-for-sell'
 import { useState } from 'react';
+
 
 
 const Sell = () => {
   const [searchField, setSearchField] = useState('');
   const [adsFilteredList, setAdsFilteredList] = useState(adsForSell);
-  const [showModal, setShowModal] = useState(false);
+  const [showAdItemModal, setShowAdItemModal] = useState(false);
   const [currentItemData, setCurrentItemData] = useState({});
+  const [showCreateAdModal, setShowCreateAdModal] = useState(false);
+
+  const currentUser = 'CurrentUser';
 
   const handleSearch = e => {
     const searchText = e.target.value.toLowerCase();
-
     setSearchField(searchText);
 
     setAdsFilteredList(adsForSell.filter(item => {
@@ -25,16 +30,21 @@ const Sell = () => {
   }
 
   const handleCardClick = (itemData) => {
-    setShowModal(true);
     setCurrentItemData(itemData);
+    setShowAdItemModal(true);
+  }
+
+  const handleCreateAdClick = () => {
+    setShowCreateAdModal(true);
   }
 
   return (
     <div className="pt-3">
-      <SellItemModal show={showModal} onHide={() => setShowModal(false)} itemData={currentItemData} />
+      <SellItemModal show={showAdItemModal} onHide={() => setShowAdItemModal(false)} itemData={currentItemData} />
+      <SellItemCreateModal show={showCreateAdModal} onHide={() => setShowCreateAdModal(false)} currentUser={currentUser} />
       <Form className="pb-4">
         <Row>
-          <Col xs="auto">
+          <Col xs="6">
             <Form.Control
               type="text"
               placeholder="Пошук"
@@ -43,26 +53,14 @@ const Sell = () => {
               onChange={handleSearch}
             />
           </Col>
-          <Col xs="auto">
-            <Button type="submit">Створити Оголошення</Button>
+          <Col xs="6">
+            <Button onClick={handleCreateAdClick} className="w-100">Створити</Button>
           </Col>
         </Row>
       </Form>
       <Row className="row-gap-3">
         {adsFilteredList.map(itemData => (
-          <Col xs={12} md={6} lg={4} xl={3} key={itemData._id}>
-            <Card className="h-100" style={{ cursor: "pointer" }} onClick={() => handleCardClick(itemData)}>
-              <Card.Img src={`/ads-for-sell/photos/${itemData._id}/${itemData.photos[0]}`} />
-              <Card.Body>
-                <Card.Title>
-                  {itemData.title}
-                </Card.Title>
-                <Card.Text>
-                  {itemData.text}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
+          <SellItemCard {...{ itemData, handleCardClick, key: itemData._id }} />
         ))}
 
       </Row>
