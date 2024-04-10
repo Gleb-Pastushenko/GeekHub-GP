@@ -1,5 +1,6 @@
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 
+import SellItemModal from '../components/SellItemModal.component';
 import { adsForSell } from '../assets/ads-for-sell'
 import { useState } from 'react';
 
@@ -7,6 +8,8 @@ import { useState } from 'react';
 const Sell = () => {
   const [searchField, setSearchField] = useState('');
   const [adsFilteredList, setAdsFilteredList] = useState(adsForSell);
+  const [showModal, setShowModal] = useState(false);
+  const [currentItemData, setCurrentItemData] = useState({});
 
   const handleSearch = e => {
     const searchText = e.target.value.toLowerCase();
@@ -21,8 +24,14 @@ const Sell = () => {
     }))
   }
 
+  const handleCardClick = (itemData) => {
+    setShowModal(true);
+    setCurrentItemData(itemData);
+  }
+
   return (
     <div className="pt-3">
+      <SellItemModal show={showModal} onHide={() => setShowModal(false)} itemData={currentItemData} />
       <Form className="pb-4">
         <Row>
           <Col xs="auto">
@@ -39,10 +48,10 @@ const Sell = () => {
           </Col>
         </Row>
       </Form>
-      <Row>
+      <Row className="row-gap-3">
         {adsFilteredList.map(itemData => (
           <Col xs={12} md={6} lg={4} xl={3} key={itemData._id}>
-            <Card>
+            <Card className="h-100" onClick={() => handleCardClick(itemData)}>
               <Card.Img src={`/ads-for-sell/photos/${itemData._id}/${itemData.photos[0]}`} />
               <Card.Body>
                 <Card.Title>

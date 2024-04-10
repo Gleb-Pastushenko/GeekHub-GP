@@ -2,8 +2,6 @@ import { Card } from 'react-bootstrap';
 
 
 const NewsItem = ({ itemData }) => {
-  console.log(itemData);
-
   return (
     <Card className="h-100">
       <Card.Img variant="top" src={`/news/photos/${itemData.url}`} />
