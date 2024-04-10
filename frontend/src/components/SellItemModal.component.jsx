@@ -23,7 +23,7 @@ const SellItemModal = (props) => {
             </Carousel.Item>
           ))}
         </Carousel>
-        <p className="lead pt-3">
+        <p className="text-emphazis fs-5 pt-3">
           {itemData.text}
         </p>
 

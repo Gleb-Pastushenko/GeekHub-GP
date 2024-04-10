@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 
 const NewsItem = ({ itemData }) => {
   return (
-    <Card className="h-100">
+    <Card className="h-100" style={{ cursor: "pointer" }}>
       <Card.Img variant="top" src={`/news/photos/${itemData.url}`} />
       <Card.Body className="gap-3">
         <Card.Title>{itemData.title}</Card.Title>
