@@ -16,10 +16,10 @@ const SellItemModal = (_props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Carousel>
+        <Carousel interval={null}>
           {itemData.photos?.map((item, idx) => (
-            <Carousel.Item key={idx}>
-              <Image src={`/ads-for-sell/photos/${itemData._id}/${item}`} height="600px" />
+            <Carousel.Item key={idx} className="h-100">
+              <Image src={`/ads-for-sell/photos/${itemData._id}/${item}`} className="w-100 mx-auto" />
             </Carousel.Item>
           ))}
         </Carousel>
