@@ -13,11 +13,12 @@ const News = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch('http://localhost:8000/api/news', { mode: 'no-cors' });
-      console.log(response);
+      const response = await fetch("http://127.0.0.1:8000/api/news");
+      const data = await response.json();
+      console.log(data);
     }
-
     getData();
+
   }, [])
 
   const handleSearch = e => {
