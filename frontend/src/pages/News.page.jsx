@@ -1,22 +1,23 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
 import NewsItem from '../components/NewsItem.component';
-import { news } from '../assets/news';
 import { useState, useEffect } from 'react';
 
 
 const News = () => {
   const [searchField, setSearchField] = useState('');
-  const [filteredNews, setFilteredNews] = useState(news);
-
-  const [newsData, setNewsData] = useState(null);
+  const [newsData, setNewsData] = useState([]);
+  const [filteredNews, setFilteredNews] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/news");
+      const response = await fetch("/api/news");
       const data = await response.json();
-      console.log(data);
+
+      setNewsData(data);
+      setFilteredNews(data);
     }
+
     getData();
 
   }, [])
@@ -25,7 +26,7 @@ const News = () => {
     const searchText = e.target.value.toLowerCase();
     setSearchField(searchText);
 
-    setFilteredNews(news.filter(item => {
+    setFilteredNews(newsData.filter(item => {
       const title = item.title.toLowerCase();
       const text = item.text.toLowerCase();
 
