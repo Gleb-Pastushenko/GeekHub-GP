@@ -54,7 +54,7 @@ const Sell = () => {
             />
           </Col>
           <Col xs="6">
-            <Button onClick={handleCreateAdClick} className="w-100">Створити</Button>
+            <Button onClick={handleCreateAdClick} className="w-100 btn-secondary">Створити</Button>
           </Col>
         </Row>
       </Form>

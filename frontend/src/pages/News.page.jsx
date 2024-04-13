@@ -47,18 +47,18 @@ const News = () => {
               type="text"
               placeholder="Пошук"
               value={searchField}
-              className="mr-sm-2"
+              className="mr-sm-2 "
               onChange={handleSearch}
             />
           </Col>
           <Col xs="6">
-            <Button onClick={handleCreateAdClick} className="w-100">Створити</Button>
+            <Button onClick={handleCreateAdClick} className="w-100 btn-secondary">Створити</Button>
           </Col>
         </Row>
       </Form>
       <Row className="g-3">
         {filteredNews.map(itemData => (
-          <Col key={itemData._id} xs={12} sm={6} md={4} lg={3}>
+          <Col key={itemData.id} xs={12} sm={6} md={4} lg={3}>
             <NewsItem itemData={itemData} />
           </Col>
         ))}
