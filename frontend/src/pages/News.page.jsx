@@ -1,6 +1,7 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
 import NewsItem from '../components/NewsItem.component';
+import NewsCreateModal from '../components/NewsCreateModal.component';
 import { useState, useEffect } from 'react';
 
 
@@ -8,6 +9,8 @@ const News = () => {
   const [searchField, setSearchField] = useState('');
   const [newsData, setNewsData] = useState([]);
   const [filteredNews, setFilteredNews] = useState([]);
+  const [showCreateNewsModal, setShowCreateNewsModal] = useState(false);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -34,12 +37,13 @@ const News = () => {
     }))
   }
 
-  const handleCreateAdClick = () => {
-
+  const handleCreateNewsClick = () => {
+    setShowCreateNewsModal(true);
   }
 
   return (
     <div className="py-3">
+      <NewsCreateModal show={showCreateNewsModal} onHide={() => setShowCreateNewsModal(false)} />
       <Form className="pb-4">
         <Row>
           <Col xs="6">
@@ -52,7 +56,7 @@ const News = () => {
             />
           </Col>
           <Col xs="6">
-            <Button onClick={handleCreateAdClick} className="w-100 btn-secondary">Створити</Button>
+            <Button onClick={handleCreateNewsClick} className="w-100 btn-secondary">Створити</Button>
           </Col>
         </Row>
       </Form>
