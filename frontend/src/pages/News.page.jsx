@@ -23,7 +23,7 @@ const News = () => {
 
     getData();
 
-  }, [])
+  }, [showCreateNewsModal])
 
   const handleSearch = e => {
     const searchText = e.target.value.toLowerCase();

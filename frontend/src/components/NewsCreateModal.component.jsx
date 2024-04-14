@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { Modal, Card, CloseButton, Image, Form, Button, Row, Col } from 'react-bootstrap';
+import { useState, useRef, useEffect } from 'react';
+import { Modal, Form, Button } from 'react-bootstrap';
 
 
 const NewsCreateModal = (props) => {
@@ -7,6 +7,28 @@ const NewsCreateModal = (props) => {
   const [text, setText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [dateTime, setDateTime] = useState('');
+  const [fileInput, setFileInput] = useState(null);
+
+  const formRef = useRef();
+  const fileInputRef = useRef();
+
+  const resetFormFields = () => {
+    setTitle('');
+    setText('');
+    setDateTime('');
+    formRef.current.reset();
+  }
+
+  const handleModalShow = () => {
+    if (fileInput) {
+      fileInputRef.current.files = fileInput;
+    }
+  }
+
+  const handleModalClose = () => {
+    setFileInput(fileInputRef.current.files);
+    props.onHide();
+  }
 
   const handleTitleChange = e => {
     setTitle(e.target.value);
@@ -41,6 +63,8 @@ const NewsCreateModal = (props) => {
 
       if (response.ok) {
         console.log('Form submitted successfully');
+        props.onHide();
+        resetFormFields();
       } else {
         console.error('Form submission failed');
       }
@@ -55,14 +79,14 @@ const NewsCreateModal = (props) => {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      onShow={() => { }}
+      onShow={handleModalShow}
     >
       <Modal.Header closeButton>
         <h3>Нова Подія</h3>
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} ref={formRef}>
           <Form.Control
             required
             type="text"
@@ -88,6 +112,7 @@ const NewsCreateModal = (props) => {
               type="file"
               accept=".jpg,.jpeg,.png"
               onChange={handleFileChange}
+              ref={fileInputRef}
             />
           </Form.Group>
           <Form.Group>
@@ -100,18 +125,16 @@ const NewsCreateModal = (props) => {
             />
 
           </Form.Group>
+          <Form.Group className="mt-3">
+            <Button type="submit">Зберегти</Button>
+            <Button className="ms-3" onClick={resetFormFields}>Очистити</Button>
+          </Form.Group>
 
-          <Button
-            type="submit"
-            className="mt-3"
-            onClick={() => { }}
-          >
-            Зберегти</Button>
         </Form>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={handleModalClose}>Close</Button>
       </Modal.Footer>
     </Modal>
   )
