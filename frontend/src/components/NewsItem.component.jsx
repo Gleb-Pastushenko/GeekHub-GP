@@ -1,5 +1,7 @@
 import { Card } from 'react-bootstrap';
 
+import { dtFormat } from '../utility/dataAppearance';
+
 
 const NewsItem = ({ itemData }) => {
   return (
@@ -10,7 +12,7 @@ const NewsItem = ({ itemData }) => {
         <Card.Text>{itemData.text}</Card.Text>
       </Card.Body>
       <Card.Footer className="fs-4 fw-bold text-secondary text-nowrap text-center">
-        {itemData.date}
+        {dtFormat(itemData.date)}
       </Card.Footer>
     </Card>
   )

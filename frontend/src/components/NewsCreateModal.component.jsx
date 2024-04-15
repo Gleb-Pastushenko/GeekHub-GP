@@ -2,7 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 
 
-const NewsCreateModal = (props) => {
+const NewsCreateModal = (_props) => {
+  const { itemData, ...props } = _props;
+
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,10 +14,28 @@ const NewsCreateModal = (props) => {
   const formRef = useRef();
   const fileInputRef = useRef();
 
+  console.log(itemData);
+
+  useEffect(() => {
+    console.log('item_data fired')
+    if (itemData) {
+      setTitle(itemData.title);
+      setText(itemData.text);
+      setDateTime(itemData.date.slice(0, -6));
+      setSelectedFile(fileInput);
+    } else {
+      setTitle('');
+      setText('');
+      setDateTime('');
+      setSelectedFile(null);
+    }
+  }, [itemData])
+
   const resetFormFields = () => {
     setTitle('');
     setText('');
     setDateTime('');
+    setSelectedFile(null);
     formRef.current.reset();
   }
 
@@ -28,6 +48,10 @@ const NewsCreateModal = (props) => {
   const handleModalClose = () => {
     setFileInput(fileInputRef.current.files);
     props.onHide();
+
+    if (itemData) {
+      resetFormFields();
+    }
   }
 
   const handleTitleChange = e => {
@@ -52,12 +76,12 @@ const NewsCreateModal = (props) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('text', text);
-    formData.append('image', selectedFile, selectedFile.name);
+    if (selectedFile) formData.append('image', selectedFile, selectedFile.name);
     formData.append('date', dateTime);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/news/', {
-        method: 'POST',
+      const response = await fetch(`/api/news/${itemData ? itemData.id : ''}`, {
+        method: itemData ? 'PATCH' : 'POST',
         body: formData,
       });
 
@@ -73,6 +97,24 @@ const NewsCreateModal = (props) => {
     }
   }
 
+  const handleDeleteItem = async (itemId) => {
+    try {
+      const response = await fetch(`/api/news/${itemData.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        props.onHide();
+        resetFormFields();
+      } else {
+        console.error('Item deleting failed');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  }
+
   return (
     <Modal
       {...props}
@@ -81,12 +123,15 @@ const NewsCreateModal = (props) => {
       centered
       onShow={handleModalShow}
     >
+      {`selectedFile: ${selectedFile}\n`}
+      {`fileInput: ${fileInput}`}
       <Modal.Header closeButton>
-        <h3>Нова Подія</h3>
+        <h3>{itemData ? 'Редагувати новину' : 'Створити новину'}</h3>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit} ref={formRef}>
+          <Form.Label>Заголовок:</Form.Label>
           <Form.Control
             required
             type="text"
@@ -95,6 +140,7 @@ const NewsCreateModal = (props) => {
             onChange={handleTitleChange}
             value={title}
           />
+          <Form.Label>Текст Новини:</Form.Label>
           <Form.Control
             required
             as="textarea"
@@ -107,7 +153,7 @@ const NewsCreateModal = (props) => {
           <Form.Group>
             <Form.Label>Додати фото:</Form.Label>
             <Form.Control
-              required
+              required={!itemData}
               className="mb-3"
               type="file"
               accept=".jpg,.jpeg,.png"
@@ -120,8 +166,8 @@ const NewsCreateModal = (props) => {
             <Form.Control
               required
               type="datetime-local"
-              accept=".jpg,.jpeg,.png"
               onChange={handleDateTimeChange}
+              value={dateTime}
             />
 
           </Form.Group>
@@ -134,6 +180,7 @@ const NewsCreateModal = (props) => {
       </Modal.Body>
 
       <Modal.Footer>
+        {itemData ? <Button className="me-auto" variant="danger" onClick={() => handleDeleteItem(itemData.id)}>Видалити новину</Button> : ''}
         <Button onClick={handleModalClose}>Close</Button>
       </Modal.Footer>
     </Modal>
