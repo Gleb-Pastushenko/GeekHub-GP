@@ -9,7 +9,7 @@ const RootLayout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main style={{ marginTop: "58px" }}>
         <Container>
           <Outlet />
         </Container>
