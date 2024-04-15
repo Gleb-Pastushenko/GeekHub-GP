@@ -63,6 +63,11 @@ const NewsCreateModal = (_props) => {
     }
   }
 
+  // Modal show/hide handlers
+  const modalShowHandler = () => {
+    resetStates();
+  }
+
   // Form controls two way bandling handlers
   const formOnSubmitHandler = async (e) => {
     e.preventDefault();
@@ -104,7 +109,7 @@ const NewsCreateModal = (_props) => {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      onShow={() => { }}
+      onShow={modalShowHandler}
     >
       <Modal.Header closeButton>
         <h3>Створити новину</h3>
@@ -114,6 +119,7 @@ const NewsCreateModal = (_props) => {
         <Form onSubmit={formOnSubmitHandler} id="change-item-form">
           <Form.Label>Заголовок:</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Заголовок"
             className="mb-3"
@@ -122,6 +128,7 @@ const NewsCreateModal = (_props) => {
           />
           <Form.Label>Текст Новини:</Form.Label>
           <Form.Control
+            required
             as="textarea"
             row={3}
             placeholder="Текст Новини"
@@ -132,6 +139,7 @@ const NewsCreateModal = (_props) => {
           <Form.Group>
             <Form.Label>Додати фото:</Form.Label>
             <Form.Control
+              required
               className="mb-3"
               type="file"
               accept=".jpg,.jpeg,.png"
@@ -142,6 +150,7 @@ const NewsCreateModal = (_props) => {
           <Form.Group>
             <Form.Label>Дата події:</Form.Label>
             <Form.Control
+              required
               type="datetime-local"
               onChange={dateTimeChangeHandler}
               value={dateTime}
