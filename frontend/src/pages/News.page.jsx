@@ -83,12 +83,12 @@ const News = () => {
   }
 
   // News Create Modal show/hide Handlers
-  const showCreateNewsModalHandler = () => {
+  const createNewsModalShowHandler = () => {
 
   }
 
-  const hideCreateNewsModalHandler = () => {
-
+  const createNewsModalOnHideHandler = () => {
+    setIsShownCreateNewsModal(false);
   }
 
   return (
@@ -103,7 +103,14 @@ const News = () => {
         setIsRefreshRequired={setIsRefreshRequired}
         itemData={selectedNews}
       />
-      <NewsCreateModal show={isShownCreateNewsModal} onHide={hideCreateNewsModalHandler} itemData={selectedNews} />
+      <NewsCreateModal
+        // Native props
+        show={isShownCreateNewsModal}
+        onHide={createNewsModalOnHideHandler}
+        // Custom props
+        setIsShown={setIsShownCreateNewsModal}
+        setIsRefreshRequired={setIsRefreshRequired}
+      />
       {/* Search field and Create button */}
       <Form className="pb-4">
         <Row>

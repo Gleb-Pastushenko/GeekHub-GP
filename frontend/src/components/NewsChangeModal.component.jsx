@@ -16,7 +16,6 @@ const NewsChangeModal = (_props) => {
   const [showSentError, setShowSentError] = useState(false);
 
   // Form control Refs
-  const formRef = useRef();
   const fileInputRef = useRef();
 
   // Utility components
@@ -101,11 +100,6 @@ const NewsChangeModal = (_props) => {
     }
   }, [props.show])
 
-  // Modal show/hide handlers
-  const handleModalShow = () => {
-
-  }
-
   // Form controls two way bandling handlers
   const formOnSubmitHandler = async (e) => {
     e.preventDefault();
@@ -146,21 +140,20 @@ const NewsChangeModal = (_props) => {
     setIsShown(false);
   }
 
-
   return (
     <Modal
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      onShow={handleModalShow}
+      onShow={() => { }}
     >
       <Modal.Header closeButton>
-        <h3>{itemData ? 'Редагувати новину' : 'Створити новину'}</h3>
+        <h3>Редагувати новину</h3>
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={formOnSubmitHandler} ref={formRef} id="change-item-form">
+        <Form onSubmit={formOnSubmitHandler} id="change-item-form">
           <Form.Label>Заголовок:</Form.Label>
           <Form.Control
             type="text"
