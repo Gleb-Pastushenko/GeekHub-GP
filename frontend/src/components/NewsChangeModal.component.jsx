@@ -112,10 +112,6 @@ const NewsChangeModal = (_props) => {
     setDateTime(e.target.value);
   }
 
-  const clearClickHandler = () => {
-
-  }
-
   const deleteClickHandler = () => {
 
   }
@@ -180,7 +176,6 @@ const NewsChangeModal = (_props) => {
           </Form.Group>
           <Form.Group className="mt-3">
             <Button type="submit">Зберегти</Button>
-            <Button className="ms-3" onClick={clearClickHandler}>Очистити</Button>
           </Form.Group>
 
         </Form>
