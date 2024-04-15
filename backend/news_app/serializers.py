@@ -3,7 +3,7 @@ from .models import News
 
 
 class NewsSerializer(serializers.ModelSerializer):
-  date = serializers.DateTimeField(format="%d.%m.%Y\xa0\xa0%H:%M")
+  date = serializers.DateTimeField()
 
   class Meta:
     model = News
