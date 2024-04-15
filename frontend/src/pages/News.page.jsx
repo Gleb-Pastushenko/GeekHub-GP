@@ -22,7 +22,7 @@ const News = () => {
   const [isShownCreateNewsModal, setIsShownCreateNewsModal] = useState(false);
   const [isShownChangeNewsModal, setIsShownChangeNewsModal] = useState(false);
 
-  // Refreshing data trigger state
+  // UI states
   const [isRefreshRequired, setIsRefreshRequired] = useState(true);
 
   // Utility Functions
@@ -100,6 +100,7 @@ const News = () => {
         onHide={changeNewsModalOnHideHandler}
         // Custom props
         setIsShown={setIsShownChangeNewsModal}
+        setIsRefreshRequired={setIsRefreshRequired}
         itemData={selectedNews}
       />
       <NewsCreateModal show={isShownCreateNewsModal} onHide={hideCreateNewsModalHandler} itemData={selectedNews} />

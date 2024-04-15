@@ -80,8 +80,8 @@ const NewsCreateModal = (_props) => {
     formData.append('date', dateTime);
 
     try {
-      const response = await fetch(`/api/news/${itemData ? itemData.id : ''}`, {
-        method: itemData ? 'PATCH' : 'POST',
+      const response = await fetch(`/api/news/`, {
+        method: 'POST',
         body: formData,
       });
 

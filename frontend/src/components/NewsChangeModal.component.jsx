@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Modal, Alert, Form, Button } from 'react-bootstrap';
 
-import { dtFormat } from '../utility/dataAppearance';
-
 
 const NewsChangeModal = (_props) => {
   // Extract custom props
-  const { setIsShown, itemData, ...props } = _props;
+  const { setIsShown, setIsRefreshRequired, itemData, ...props } = _props;
 
   // Form control states
   const [title, setTitle] = useState('');
@@ -66,13 +64,34 @@ const NewsChangeModal = (_props) => {
     }
   }
 
+  const deleteItem = async () => {
+    try {
+      const response = await fetch(`/api/news/${itemData.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        return 0
+
+      } else {
+        console.error('Form submission failed');
+        return 1
+      }
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      return 1
+    }
+  }
+
   // Handle Modal show/hide
   useEffect(() => {
     if (props.show) {
       // Set form fields according to item data
       setTitle(itemData.title);
       setText(itemData.text);
-      setDateTime(itemData.date);
+      setDateTime(itemData.date.slice(0, -6));
     } else {
       // Reset form fields on modal close
       setTitle('');
@@ -80,7 +99,6 @@ const NewsChangeModal = (_props) => {
       setImageFile(null);
       setDateTime('');
     }
-
   }, [props.show])
 
   // Modal show/hide handlers
@@ -89,10 +107,21 @@ const NewsChangeModal = (_props) => {
   }
 
   // Form controls two way bandling handlers
-  const formOnSubmitHandler = async () => {
-    const result = await sendChanges();
+  const formOnSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    const submitter = e.nativeEvent.submitter;
+
+    console.log(submitter)
+    console.log('form submit fired')
+
+    const result = (submitter.name === "save-button") ? await sendChanges() : await deleteItem();
     if (result === 1) {
       setShowSentError(true);
+    } else {
+      resetStates();
+      setIsRefreshRequired(true);
+      setIsShown(false);
     }
   }
 
@@ -110,10 +139,6 @@ const NewsChangeModal = (_props) => {
 
   const dateTimeChangeHandler = (e) => {
     setDateTime(e.target.value);
-  }
-
-  const deleteClickHandler = () => {
-
   }
 
   const closeClickHandler = () => {
@@ -135,7 +160,7 @@ const NewsChangeModal = (_props) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={formOnSubmitHandler} ref={formRef}>
+        <Form onSubmit={formOnSubmitHandler} ref={formRef} id="change-item-form">
           <Form.Label>Заголовок:</Form.Label>
           <Form.Control
             type="text"
@@ -175,14 +200,14 @@ const NewsChangeModal = (_props) => {
 
           </Form.Group>
           <Form.Group className="mt-3">
-            <Button type="submit">Зберегти</Button>
+            <Button type="submit" name="save-button">Зберегти</Button>
           </Form.Group>
 
         </Form>
       </Modal.Body>
 
       <Modal.Footer>
-        {itemData ? <Button className="me-auto" variant="danger" onClick={deleteClickHandler}>Видалити новину</Button> : ''}
+        <Button type="submit" form="change-item-form" name="delete-button" className="me-auto" variant="danger">Видалити новину</Button>
         <Button onClick={closeClickHandler}>Close</Button>
       </Modal.Footer>
     </Modal >
