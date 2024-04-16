@@ -3,7 +3,6 @@ from .models import News
 
 
 class NewsSerializer(serializers.ModelSerializer):
-  date = serializers.DateTimeField()
 
   class Meta:
     model = News

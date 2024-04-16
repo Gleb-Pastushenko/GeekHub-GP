@@ -2,40 +2,39 @@ import { useEffect, useRef, useState } from 'react';
 import { Modal, Card, CloseButton, Image, Form, Button, Row, Col } from 'react-bootstrap';
 
 const SellItemCreateModal = (_props) => {
+  // Extract custom props
   const { currentUser, ...props } = _props;
+
+  // Form control states
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
+  const [imageFiles, setImageFiles] = useState([]);
+
+  // Form control Refs
+  const formRef = useRef();
+  const fileInputRef = useRef();
+
+  // Utility functions
+  const sendData = async () => {
+    const formData = new FormData(formRef.current);
+
+    const response = await fetch('/api/news/', {
+      method: 'POST',
+      body: formData,
+    })
+
+    // formData.append('title', title);
+    // formData.append('text', text);
+    // if (imageFiles) formData.append('image', imageFiles, imageFiles.name);
+  }
+
+
+
   // imageFiles - array of files added to file input. Is used for tracking added files.
   // imageURLs - array of URL.createObjectURL temporary URLs. Is used for showing Thumbnails.
   // fileList - directly the fileList. Is used to recover file input aftef modal reopening.
-  const [imageFiles, setImageFiles] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [fileList, setFileList] = useState(null);
-
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-
-  const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    const dataTransfer = new DataTransfer();
-
-    imageFiles.forEach((file) => {
-      dataTransfer.items.add(file)
-    })
-
-    setFileList(dataTransfer.files)
-
-    if (fileInputRef.current) {
-      fileInputRef.current.files = dataTransfer.files;
-    }
-  }, [imageFiles]);
-
-  const handleTitleChange = e => {
-    setTitle(e.target.value);
-  }
-
-  const handleTextChange = e => {
-    setText(e.target.value);
-  }
 
   const handleFileChange = e => {
     const currentFiles = [...imageFiles].map(file => file.name);
@@ -54,46 +53,74 @@ const SellItemCreateModal = (_props) => {
     fileInputRef.current.files = fileList;
   }
 
+  // Form control handlers
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    const result = await sendData();
+  }
+
+  const titleChangeHandler = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const textChangeHandler = (e) => {
+    setText(e.target.value);
+  }
+
+  const inputFileChangeHandler = (e) => {
+    setImageFiles(e.target.files);
+  }
+
   return (
     <Modal
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      onShow={handleOnShow}
+      onShow={() => { }}
     >
       <Modal.Header closeButton>
-        <h3>Нове оголошення</h3>
+        <h3>Створити оголошення</h3>
       </Modal.Header>
 
       <Modal.Body>
-        <Form>
-          <Form.Control
-            type="text"
-            placeholder="Заголовок"
-            className="mb-3"
-            onChange={handleTitleChange}
-            value={title}
-          />
-          <Form.Control
-            as="textarea"
-            row={3}
-            placeholder="Текст оголошення"
-            className="mb-3"
-            onChange={handleTextChange}
-            value={text}
-          />
+        <Form onSubmit={formSubmitHandler} ref={formRef}>
           <Form.Group>
+            <Form.Label>Заголовок:</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Заголовок"
+              onChange={titleChangeHandler}
+              name="title"
+              value={title}
+            />
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>Текст оголошення:</Form.Label>
+            <Form.Control
+              required
+              as="textarea"
+              row={3}
+              placeholder="Текст оголошення"
+              onChange={textChangeHandler}
+              name="text"
+              value={text}
+            />
+          </Form.Group>
+
+          <Form.Group className="mt-3">
             <Form.Label>Додати фото:</Form.Label>
             <Form.Control
+              required
               type="file"
               accept=".jpg,.jpeg,.png"
               multiple
-              onChange={handleFileChange}
+              onChange={inputFileChangeHandler}
+              name="images"
               ref={fileInputRef}
             />
             <Button type="submit" className="mt-3">Зберегти</Button>
-
           </Form.Group>
         </Form>
         <Row className="pt-3">
