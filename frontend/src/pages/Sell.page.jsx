@@ -58,7 +58,7 @@ const Sell = () => {
           </Col>
         </Row>
       </Form>
-      <Row className="row-gap-3">
+      <Row className="g-3">
         {adsFilteredList.map(itemData => (
           <SellItemCard {...{ itemData, handleCardClick, key: itemData._id }} />
         ))}
