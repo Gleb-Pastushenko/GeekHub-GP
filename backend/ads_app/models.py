@@ -13,7 +13,7 @@ def service_ads_upload_path(instance, filename):
 
 def vacancy_ads_apload_path(instance, filename):
   return f'vacancy_ads/{filename}'
-
+  
 
 class SellAd(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)

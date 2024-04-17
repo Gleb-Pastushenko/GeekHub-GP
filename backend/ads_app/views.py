@@ -3,8 +3,54 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import ServiceAd
-from .serializers import ServiceAdSerializer
+from .models import SellAd, SellAdImage, ServiceAd
+from .serializers import SellAdSerializer, SellAdImageSerializer, ServiceAdSerializer
+
+
+class SellAdView(APIView):
+  def get(self, request):
+    sellAdinstances = SellAd.objects.all()
+    sellAdImageInstanses = SellAdImage.objects.all()
+    sellAdSerializer = SellAdSerializer(sellAdinstances, many=True)
+    sellAdImageSerializer = SellAdImageSerializer(sellAdImageInstanses, many=True)
+
+    sellAds = sellAdSerializer.data
+    sellAdImages = sellAdImageSerializer.data
+
+    def get_images(ad, images):
+      return list(filter(lambda img: img['sell_ad'] == ad['id'], images))
+   
+    return Response(
+      [{**ad, 'images': get_images(ad, sellAdImages)} for ad in sellAds]
+    )
+    
+    # return Response({
+    #   "sellAds": sellAds,
+    #   "sellAdImages": sellAdImages})
+
+
+  def post(self, request):
+    print(dict(request.data))
+
+    images = request.data.pop('image')
+
+    serializer = SellAdSerializer(data=request.data)
+    if serializer.is_valid():
+
+      serializer.save()
+      print(serializer.instance.id)
+
+      for image in images:
+        sellAdImgserializer = SellAdImageSerializer(data={'sell_ad': serializer.instance.id, 'image': image})
+        if sellAdImgserializer.is_valid():
+          sellAdImgserializer.save()
+
+      # serializer.save()
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    print(serializer.errors)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # return Response('POST FIRED')
 
 
 class ServiceAdView(APIView):

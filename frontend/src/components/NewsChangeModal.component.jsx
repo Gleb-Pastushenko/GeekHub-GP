@@ -49,16 +49,13 @@ const NewsChangeModal = (_props) => {
       });
 
       if (response.ok) {
-        console.log('Form submitted successfully');
         return 0
 
       } else {
-        console.error('Form submission failed');
         return 1
       }
 
     } catch (error) {
-      console.error('Error submitting form:', error);
       return 1
     }
   }
@@ -105,9 +102,6 @@ const NewsChangeModal = (_props) => {
     e.preventDefault();
 
     const submitter = e.nativeEvent.submitter;
-
-    console.log(submitter)
-    console.log('form submit fired')
 
     const result = (submitter.name === "save-button") ? await sendChanges() : await deleteItem();
     if (result === 1) {

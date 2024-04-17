@@ -3,12 +3,13 @@ import { Modal, Card, CloseButton, Image, Form, Button, Row, Col } from 'react-b
 
 const SellItemCreateModal = (_props) => {
   // Extract custom props
-  const { currentUser, ...props } = _props;
+  const { currentUser, setIsModalShown, setIsRefreshRequired, ...props } = _props;
 
   // Form control states
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const [imageFiles, setImageFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [filePreviewURLs, setFilePreviewURLs] = useState([]);
 
   // Form control Refs
   const formRef = useRef();
@@ -17,46 +18,54 @@ const SellItemCreateModal = (_props) => {
   // Utility functions
   const sendData = async () => {
     const formData = new FormData(formRef.current);
+    formData.append('user', 1)
 
-    const response = await fetch('/api/news/', {
+    const response = await fetch('/api/sell-ads/', {
       method: 'POST',
       body: formData,
     })
-
-    // formData.append('title', title);
-    // formData.append('text', text);
-    // if (imageFiles) formData.append('image', imageFiles, imageFiles.name);
   }
 
-
-
-  // imageFiles - array of files added to file input. Is used for tracking added files.
-  // imageURLs - array of URL.createObjectURL temporary URLs. Is used for showing Thumbnails.
-  // fileList - directly the fileList. Is used to recover file input aftef modal reopening.
-  const [imageURLs, setImageURLs] = useState([]);
-  const [fileList, setFileList] = useState(null);
-
-  const handleFileChange = e => {
-    const currentFiles = [...imageFiles].map(file => file.name);
-    const newFiles = [...e.target.files].filter(file => !currentFiles.includes(file.name))
-
-    setImageFiles([...imageFiles, ...newFiles])
-    setImageURLs([...imageURLs, ...newFiles.map(file => URL.createObjectURL(file))])
+  const resetStates = () => {
+    setTitle('');
+    setText('');
   }
 
-  const handleImageRemove = idx => {
-    setImageFiles([...imageFiles.toSpliced(idx, 1)]);
-    setImageURLs([...imageURLs.toSpliced(idx, 1)]);
+  const toFileList = (files) => {
+    const dataTransfer = new DataTransfer();
+    files.forEach(file => dataTransfer.items.add(file));
+
+    return dataTransfer.files;
   }
 
-  const handleOnShow = () => {
-    fileInputRef.current.files = fileList;
+  const getImageURLs = (files) => {
+    return selectedFiles.map(file => URL.createObjectURL(file))
   }
+
+  const appendSelectedFiles = (files) => {
+    const selectedFileNames = selectedFiles.map(file => file.name);
+    const newFiles = files.filter(file => !selectedFileNames.includes(file.name));
+
+    setSelectedFiles((currentFiles) => [...currentFiles, ...newFiles]);
+  }
+
+  // Refreshing file input state, and file preview URLs
+  useEffect(() => {
+    if (fileInputRef.current) {
+      const fileList = toFileList(selectedFiles);
+
+      fileInputRef.current.files = fileList;
+      setFilePreviewURLs(getImageURLs(fileList));
+    }
+  }, [selectedFiles])
+
 
   // Form control handlers
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     const result = await sendData();
+    setIsRefreshRequired(true);
+
   }
 
   const titleChangeHandler = (e) => {
@@ -68,7 +77,15 @@ const SellItemCreateModal = (_props) => {
   }
 
   const inputFileChangeHandler = (e) => {
-    setImageFiles(e.target.files);
+    appendSelectedFiles([...e.target.files]);
+  }
+
+  const closeClickHandler = () => {
+    setIsModalShown(false);
+  }
+
+  const previewRemoveHandler = (idx) => {
+    setSelectedFiles((currentFiles) => currentFiles.toSpliced(idx, 1))
   }
 
   return (
@@ -117,20 +134,20 @@ const SellItemCreateModal = (_props) => {
               accept=".jpg,.jpeg,.png"
               multiple
               onChange={inputFileChangeHandler}
-              name="images"
+              name="image"
               ref={fileInputRef}
             />
             <Button type="submit" className="mt-3">Зберегти</Button>
           </Form.Group>
         </Form>
         <Row className="pt-3">
-          {imageURLs.map((imageURL, idx) => (
+          {filePreviewURLs.map((imageURL, idx) => (
             <Col key={imageURL} className="p-1" xs={6} sm={4} md={3}>
               <Card className="h-100 position-relative">
                 <Image src={imageURL} className="my-auto" thumbnail />
                 <CloseButton
                   className="position-absolute top-0 end-0 bg-white"
-                  onClick={() => handleImageRemove(idx)}
+                  onClick={() => previewRemoveHandler(idx)}
                 />
               </Card>
             </Col>
@@ -139,7 +156,7 @@ const SellItemCreateModal = (_props) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={closeClickHandler}>Close</Button>
       </Modal.Footer>
     </Modal>
   )

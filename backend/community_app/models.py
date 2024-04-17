@@ -18,7 +18,7 @@ class User(models.Model):
   
 class LandPlot(models.Model):
   user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-  address_number = models.IntegerField(max_length=3)
+  address_number = models.IntegerField()
   well = models.BinaryField()
   electricity = models.BinaryField()
   fence = models.BinaryField()

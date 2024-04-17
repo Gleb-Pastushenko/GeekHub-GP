@@ -1,19 +1,18 @@
 from rest_framework import serializers
-from .models import ServiceAd
+from .models import SellAd, SellAdImage, ServiceAd
+
+
+class SellAdImageSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = SellAdImage
+    fields = '__all__'
 
 
 class SellAdSerializer(serializers.ModelSerializer):
       
   class Meta:
-    model = ''
-    fields = '__all__'
-
-
-class SellAdImage(serializers.ModelSerializer):
-  sell_ad = SellAdSerializer()
-
-  class Meta:
-    model = ''
+    model = SellAd
     fields = '__all__'
 
 

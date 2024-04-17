@@ -1,7 +1,7 @@
 import { Modal, Carousel, Image, Button } from 'react-bootstrap';
 
 const SellItemModal = (_props) => {
-  const { itemData, ...props } = _props;
+  const { itemData, setIsModalShown, setIsRefreshRequired, ...props } = _props;
 
   return (
     <Modal
@@ -12,19 +12,19 @@ const SellItemModal = (_props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {itemData.title}
+          {itemData?.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Carousel interval={null}>
-          {itemData.photos?.map((item, idx) => (
+          {itemData?.photos?.map((item, idx) => (
             <Carousel.Item key={idx} className="h-100">
               <Image src={`/ads-for-sell/photos/${itemData._id}/${item}`} className="w-100 mx-auto" />
             </Carousel.Item>
           ))}
         </Carousel>
         <p className="text-emphazis fs-5 pt-3">
-          {itemData.text}
+          {itemData?.text}
         </p>
 
 
