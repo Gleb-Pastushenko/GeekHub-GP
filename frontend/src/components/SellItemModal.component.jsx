@@ -1,7 +1,26 @@
 import { Modal, Carousel, Image, Button } from 'react-bootstrap';
 
 const SellItemModal = (_props) => {
+  // Extract custom props
   const { itemData, setIsModalShown, setIsRefreshRequired, ...props } = _props;
+
+  // Utility functions
+  const deleteItem = async (itemId) => {
+    const response = await fetch(`/api/sell-ads/${itemId}`, {
+      method: 'DELETE',
+    })
+
+    return response;
+  }
+
+  // Control handlers
+  const deleteClickHandler = async (itemId) => {
+    const response = await deleteItem(itemId);
+    if (response.ok) {
+      setIsRefreshRequired(true);
+      setIsModalShown(false);
+    }
+  }
 
   return (
     <Modal
@@ -17,9 +36,9 @@ const SellItemModal = (_props) => {
       </Modal.Header>
       <Modal.Body>
         <Carousel interval={null}>
-          {itemData?.photos?.map((item, idx) => (
+          {itemData?.images.map((imageItem, idx) => (
             <Carousel.Item key={idx} className="h-100">
-              <Image src={`/ads-for-sell/photos/${itemData._id}/${item}`} className="w-100 mx-auto" />
+              <Image src={`${imageItem.image}`} className="w-100 mx-auto" />
             </Carousel.Item>
           ))}
         </Carousel>
@@ -30,7 +49,8 @@ const SellItemModal = (_props) => {
 
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={() => deleteClickHandler(itemData.id)} className="me-auto" variant="danger">Видалити</Button>
+        <Button onClick={props.onHide}>Закрити</Button>
       </Modal.Footer>
     </Modal>
   )

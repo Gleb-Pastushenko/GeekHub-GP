@@ -23,22 +23,13 @@ class SellAdView(APIView):
     return Response(
       [{**ad, 'images': get_images(ad, sellAdImages)} for ad in sellAds]
     )
-    
-    # return Response({
-    #   "sellAds": sellAds,
-    #   "sellAdImages": sellAdImages})
-
 
   def post(self, request):
-    print(dict(request.data))
-
     images = request.data.pop('image')
 
     serializer = SellAdSerializer(data=request.data)
     if serializer.is_valid():
-
       serializer.save()
-      print(serializer.instance.id)
 
       for image in images:
         sellAdImgserializer = SellAdImageSerializer(data={'sell_ad': serializer.instance.id, 'image': image})
@@ -51,6 +42,17 @@ class SellAdView(APIView):
     print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     # return Response('POST FIRED')
+
+  def get_object(self, pk):
+    try:
+      return SellAd.objects.get(pk=pk)
+    except SellAd.DoesNotExist:
+      raise Http404
+
+  def delete(self, request, pk):
+    instance = self.get_object(pk)
+    instance.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ServiceAdView(APIView):
