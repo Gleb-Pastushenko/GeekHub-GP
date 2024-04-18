@@ -1,7 +1,7 @@
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
-import logo from '../assets/site-logo.png'
-import { LinkContainer } from 'react-router-bootstrap'
+import logo from '../assets/site-logo.png';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 const Header = () => {
