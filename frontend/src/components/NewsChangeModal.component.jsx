@@ -195,7 +195,7 @@ const NewsChangeModal = (_props) => {
 
       <Modal.Footer>
         <Button type="submit" form="change-item-form" name="delete-button" className="me-auto" variant="danger">Видалити новину</Button>
-        <Button onClick={closeClickHandler}>Close</Button>
+        <Button onClick={closeClickHandler}>Закрити</Button>
       </Modal.Footer>
     </Modal >
   )

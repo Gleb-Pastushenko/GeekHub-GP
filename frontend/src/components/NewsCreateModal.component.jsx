@@ -166,7 +166,7 @@ const NewsCreateModal = (_props) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button onClick={closeClickHandler}>Close</Button>
+        <Button onClick={closeClickHandler}>Закрити</Button>
       </Modal.Footer>
     </Modal >
   )
