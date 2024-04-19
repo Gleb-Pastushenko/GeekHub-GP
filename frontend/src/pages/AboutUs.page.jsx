@@ -1,6 +1,7 @@
 import { Row, Col, Card, Stack, Carousel, Image } from 'react-bootstrap';
 
 import interactive_icon from '../assets/interactive_icon.png';
+import '../assets/css/carousel-control-restyling.css';
 
 import img1 from "../assets/community_photos/img1.jpg";
 import img2 from "../assets/community_photos/img2.jpg";
@@ -25,7 +26,7 @@ const AboutUs = () => {
 
       <Carousel interval={null}>
         {images.map(image => (
-          <Carousel.Item style={{ maxHeight: "400px", textAlign: "center", ...ambientBackground(image) }}>
+          <Carousel.Item key={image} style={{ maxHeight: "400px", textAlign: "center", ...ambientBackground(image) }}>
             <div style={{ backdropFilter: "blur(15px)" }}>
               <Image src={image} className="mx-auto" style={{ maxHeight: "400px" }}></Image>
             </div>
