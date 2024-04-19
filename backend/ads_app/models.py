@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+import os
 
 from community_app.models import User
 
@@ -30,6 +32,30 @@ class ServiceAd(models.Model):
   title = models.CharField(max_length=100)
   text = models.TextField()
   image = models.ImageField(upload_to=service_ads_upload_path)
+
+
+@receiver(models.signals.post_delete, sender=ServiceAd)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+  if instance.image:
+    if os.path.isfile(instance.image.path):
+      os.remove(instance.image.path)
+
+
+@receiver(models.signals.pre_save, sender=ServiceAd)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+  if not instance.pk:
+    return False
+  
+  try:
+    old_file = ServiceAd.objects.get(pk=instance.pk).image
+  except ServiceAd.DoesNotExist:
+    return False
+  
+  new_file = instance.image
+
+  if not old_file == new_file:
+    if os.path.isfile(old_file.path):
+      os.remove(old_file.path)
 
 
 class VacancyAd(models.Model):
