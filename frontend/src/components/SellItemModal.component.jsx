@@ -1,5 +1,6 @@
 import { Modal, Carousel, Image, Button } from 'react-bootstrap';
 
+
 const SellItemModal = (_props) => {
   // Extract custom props
   const { itemData, setIsModalShown, setIsRefreshRequired, ...props } = _props;
@@ -35,24 +36,23 @@ const SellItemModal = (_props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Carousel interval={null}>
+        <Carousel interval={null} >
           {itemData?.images.map((imageItem, idx) => (
-            <Carousel.Item key={idx} className="h-100">
-              <Image src={`${imageItem.image}`} className="w-100 mx-auto" />
+            <Carousel.Item key={idx} className="h-100" style={{ textAlign: "center", background: "#dddddd" }}>
+              <Image src={`${imageItem.image}`} className="mx-auto" style={{ maxHeight: "50vh", maxWidth: "100%" }} />
             </Carousel.Item>
           ))}
         </Carousel>
         <p className="text-emphazis fs-5 pt-3">
           {itemData?.text}
         </p>
-
-
       </Modal.Body>
+
       <Modal.Footer>
         <Button onClick={() => deleteClickHandler(itemData.id)} className="me-auto" variant="danger">Видалити</Button>
         <Button onClick={props.onHide}>Закрити</Button>
       </Modal.Footer>
-    </Modal>
+    </Modal >
   )
 }
 
