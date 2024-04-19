@@ -67,18 +67,17 @@ const SellItemCreateModal = (_props) => {
   const formSubmitHandler = async (e) => {
     const form = e.currentTarget;
 
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!form.checkValidity()) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log("NOT VALID!!!")
+      setFormValidated(true);
     } else {
       const result = await sendData();
       setIsRefreshRequired(true);
       resetStates();
       setIsModalShown(false);
     }
-
-    setFormValidated(true);
   }
 
   const titleChangeHandler = (e) => {
@@ -115,8 +114,8 @@ const SellItemCreateModal = (_props) => {
       </Modal.Header>
 
       <Modal.Body>
-
         <Form onSubmit={formSubmitHandler} ref={formRef} noValidate validated={formValidated}>
+
           <Form.Group >
             <Form.Label>Заголовок:</Form.Label>
             <Form.Control
@@ -133,6 +132,7 @@ const SellItemCreateModal = (_props) => {
               "Обов'язкове поле!"
             </Form.Control.Feedback>
           </Form.Group>
+
           <Form.Group className="mt-3">
             <Form.Label>Текст оголошення:</Form.Label>
             <Form.Control
