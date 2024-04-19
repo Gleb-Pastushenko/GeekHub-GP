@@ -14,6 +14,16 @@ const SellItemModal = (_props) => {
     return response;
   }
 
+  const ambientBackground = (image) => {
+    return {
+      backgroundImage: `url(${image})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }
+  }
+
+
+
   // Control handlers
   const deleteClickHandler = async (itemId) => {
     const response = await deleteItem(itemId);
@@ -38,8 +48,10 @@ const SellItemModal = (_props) => {
       <Modal.Body>
         <Carousel interval={null} >
           {itemData?.images.map((imageItem, idx) => (
-            <Carousel.Item key={idx} className="h-100" style={{ textAlign: "center", background: "#dddddd" }}>
-              <Image src={`${imageItem.image}`} className="mx-auto" style={{ maxHeight: "50vh", maxWidth: "100%" }} />
+            <Carousel.Item key={idx} className="h-100" style={{ textAlign: "center", ...ambientBackground(imageItem.image) }}>
+              <div style={{ backdropFilter: "blur(15px)" }}>
+                <Image src={`${imageItem.image}`} className="mx-auto" style={{ maxHeight: "50vh", maxWidth: "100%" }} />
+              </div>
             </Carousel.Item>
           ))}
         </Carousel>
