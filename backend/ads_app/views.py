@@ -13,7 +13,6 @@ class SellAdView(APIView):
     sellAdImageInstanses = SellAdImage.objects.all()
     sellAdSerializer = SellAdSerializer(sellAdinstances, many=True)
     sellAdImageSerializer = SellAdImageSerializer(sellAdImageInstanses, many=True)
-
     sellAds = sellAdSerializer.data
     sellAdImages = sellAdImageSerializer.data
 
@@ -57,7 +56,7 @@ class SellAdView(APIView):
 
 class ServiceAdView(APIView):
   def get(self, request, format=None):
-    instances = ServiceAd.objects.all()
+    instances = ServiceAd.objects.all().order_by('id').reverse()
     serializer = ServiceAdSerializer(instances, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
   

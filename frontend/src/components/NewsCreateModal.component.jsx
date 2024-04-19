@@ -135,7 +135,7 @@ const NewsCreateModal = (_props) => {
               value={title}
               maxLength={100}
             />
-            <Form.Text>Залишилось {100 - text.length}</Form.Text>
+            <Form.Text>Залишилось {100 - title.length}</Form.Text>
             <Form.Control.Feedback type="invalid">Обов'язове поле!</Form.Control.Feedback>
           </Form.Group>
 

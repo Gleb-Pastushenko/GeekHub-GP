@@ -7,6 +7,7 @@ const ServiceChangeModal = (_props) => {
   const { setIsShown, setIsRefreshRequired, itemData, ...props } = _props;
 
   // Form control states
+  const [formValidated, setFormValidated] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [imageFile, setImageFile] = useState(null);
@@ -97,19 +98,26 @@ const ServiceChangeModal = (_props) => {
 
   // Form controls two way bandling handlers
   const formOnSubmitHandler = async (e) => {
-    e.preventDefault();
-
+    const form = e.currentTarget;
     const submitter = e.nativeEvent.submitter;
 
-    const result = (submitter.name === "save-button") ? await sendChanges() : await deleteItem();
-    if (result === 1) {
-      setShowSentError(true);
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!form.checkValidity()) {
+      setFormValidated(true);
     } else {
-      resetStates();
-      setIsRefreshRequired(true);
-      setIsShown(false);
+      const result = (submitter.name === "save-button") ? await sendChanges() : await deleteItem();
+      if (result === 1) {
+        setShowSentError(true);
+      } else {
+        resetStates();
+        setIsRefreshRequired(true);
+        setIsShown(false);
+      }
     }
   }
+
 
   const titleChangeHandler = (e) => {
     setTitle(e.target.value);
@@ -141,24 +149,36 @@ const ServiceChangeModal = (_props) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={formOnSubmitHandler} id="change-item-form">
-          <Form.Label>Заголовок:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Заголовок"
-            className="mb-3"
-            onChange={titleChangeHandler}
-            value={title}
-          />
-          <Form.Label>Опис послуги:</Form.Label>
-          <Form.Control
-            as="textarea"
-            row={3}
-            placeholder="Опис послуги"
-            className="mb-3"
-            onChange={textChangeHandler}
-            value={text}
-          />
+        <Form noValidate validated={formValidated} onSubmit={formOnSubmitHandler} id="change-item-form">
+          <Form.Group className="mb-3">
+            <Form.Label>Заголовок:</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Заголовок"
+              onChange={titleChangeHandler}
+              value={title}
+              maxLength={100}
+            />
+            <Form.Text>Залишилось {100 - title.length}</Form.Text>
+            <Form.Control.Feedback type="invalid">Обов'язкове поле!</Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Опис послуги:</Form.Label>
+            <Form.Control
+              required
+              as="textarea"
+              row={3}
+              placeholder="Опис послуги"
+              onChange={textChangeHandler}
+              value={text}
+              maxLength={500}
+            />
+            <Form.Text>Залишилось {500 - text.length}</Form.Text>
+            <Form.Control.Feedback type="invalid">Обов'язкове поле!</Form.Control.Feedback>
+          </Form.Group>
+
           <Form.Group>
             <Form.Label>Додати фото:</Form.Label>
             <Form.Control
@@ -169,9 +189,11 @@ const ServiceChangeModal = (_props) => {
               ref={fileInputRef}
             />
           </Form.Group>
+
           <Form.Group>
             {showSentError ? sendErrorAlert : ''}
           </Form.Group>
+
           <Form.Group className="mt-3">
             <Button type="submit" name="save-button">Зберегти</Button>
           </Form.Group>
