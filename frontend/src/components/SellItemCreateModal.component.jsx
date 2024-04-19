@@ -32,6 +32,7 @@ const SellItemCreateModal = (_props) => {
   const resetStates = () => {
     setTitle('');
     setText('');
+    selectedFiles([]);
   }
 
   const toFileList = (files) => {
