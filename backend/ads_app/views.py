@@ -10,7 +10,7 @@ from .serializers import SellAdSerializer, SellAdImageSerializer, ServiceAdSeria
 class SellAdView(APIView):
   def get(self, request):
     sellAdinstances = SellAd.objects.all()
-    sellAdImageInstanses = SellAdImage.objects.all().reverse()
+    sellAdImageInstanses = SellAdImage.objects.all().order_by('id').reverse()
     sellAdSerializer = SellAdSerializer(sellAdinstances, many=True)
     sellAdImageSerializer = SellAdImageSerializer(sellAdImageInstanses, many=True)
 
