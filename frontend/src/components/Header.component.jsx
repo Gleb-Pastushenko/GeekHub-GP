@@ -34,9 +34,6 @@ const Header = () => {
               <LinkContainer to="about-us">
                 <Nav.Link>Про нас</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="payments">
-                <Nav.Link>Оплата</Nav.Link>
-              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>

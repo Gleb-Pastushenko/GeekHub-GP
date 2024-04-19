@@ -76,7 +76,7 @@ const AboutUs = () => {
               <h4 className="text-center">Розташування товариства</h4>
             </Card.Header>
             <Card.Body>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6037.745513866888!2d32.076419855327075!3d49.62187398524039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sru!2sua!4v1713437047707!5m2!1sru!2sua" width="100%" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6037.745513866888!2d32.076419855327075!3d49.62187398524039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sru!2sua!4v1713437047707!5m2!1sru!2sua" width="100%" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             </Card.Body>
           </Card>
         </Col>
