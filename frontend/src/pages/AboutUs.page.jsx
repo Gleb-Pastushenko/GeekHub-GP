@@ -8,27 +8,31 @@ import img3 from "../assets/community_photos/img3.jpg";
 import img4 from "../assets/community_photos/img4.jpg";
 import img5 from "../assets/community_photos/img5.jpg";
 
+const images = [img1, img2, img3, img4, img5]
+
 const AboutUs = () => {
+  const ambientBackground = (image) => {
+    return {
+      backgroundImage: `url(${image})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }
+  }
+
   return (
     <div className="py-3">
       <h3 className="text-center">Садове товариство "Лісова Поляна"</h3>
 
-      <Carousel style={{ background: "rgba(0, 0, 0, 0.4" }}>
-        <Carousel.Item style={{ maxHeight: "400px", textAlign: "center" }}>
-          <Image src={img1} className="mx-auto" style={{ maxHeight: "400px" }}></Image>
-        </Carousel.Item>
-        <Carousel.Item style={{ maxHeight: "400px", textAlign: "center" }}>
-          <Image src={img2} style={{ maxHeight: "400px" }}></Image>
-        </Carousel.Item>
-        <Carousel.Item style={{ maxHeight: "400px", textAlign: "center" }}>
-          <Image src={img3} style={{ maxHeight: "400px" }}></Image>
-        </Carousel.Item>
-        <Carousel.Item style={{ maxHeight: "400px", textAlign: "center" }}>
-          <Image src={img4} style={{ maxHeight: "400px" }}></Image>
-        </Carousel.Item>
-        <Carousel.Item style={{ maxHeight: "400px", textAlign: "center" }}>
-          <Image src={img5} style={{ maxHeight: "400px" }}></Image>
-        </Carousel.Item>
+      <Carousel interval={null}>
+        {images.map(image => (
+          <Carousel.Item style={{ maxHeight: "400px", textAlign: "center", ...ambientBackground(image) }}>
+            <div style={{ backdropFilter: "blur(15px)" }}>
+              <Image src={image} className="mx-auto" style={{ maxHeight: "400px" }}></Image>
+            </div>
+
+          </Carousel.Item>
+        ))}
+
       </Carousel>
 
       <Row className="py-3 py-md-5">
@@ -76,7 +80,7 @@ const AboutUs = () => {
               <h4 className="text-center">Розташування товариства</h4>
             </Card.Header>
             <Card.Body>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6037.745513866888!2d32.076419855327075!3d49.62187398524039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sru!2sua!4v1713437047707!5m2!1sru!2sua" width="100%" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6037.745513866888!2d32.076419855327075!3d49.62187398524039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sua!2sua!4v1713437047707!5m2!1sua!2sua" width="100%" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             </Card.Body>
           </Card>
         </Col>
