@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from community_app.models import User, LandPlot
+from community_app.models import LandPlot
 
 
-admin.site.register(User)
 admin.site.register(LandPlot)

@@ -1,8 +1,8 @@
-from django.db import models
-from django.dispatch import receiver
 import os
 
-from community_app.models import User
+from django.db import models
+from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 
 def sell_ads_upload_path(instance, filename):

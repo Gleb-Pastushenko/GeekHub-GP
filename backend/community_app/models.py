@@ -1,8 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-  
-  
 class LandPlot(models.Model):
   user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
   address_number = models.IntegerField()
