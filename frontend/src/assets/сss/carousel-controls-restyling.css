@@ -1,0 +1,6 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+}

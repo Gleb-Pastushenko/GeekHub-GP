@@ -1,7 +1,7 @@
 import { Row, Col, Card, Stack, Carousel, Image } from 'react-bootstrap';
 
 import interactive_icon from '../assets/interactive_icon.png';
-import '../assets/css/carousel-control-restyling.css';
+import '../assets/сss/carousel-controls-restyling.css';
 
 import img1 from "../assets/community_photos/img1.jpg";
 import img2 from "../assets/community_photos/img2.jpg";
