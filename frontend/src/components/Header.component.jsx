@@ -16,7 +16,7 @@ const Header = () => {
           </LinkContainer>
           <LinkContainer to="user-profile">
             <Nav.Link className="ms-auto me-3 me-lg-0 order-lg-2">
-              <i className="fa-regular fa-user"></i> Username
+              <i className="fa-regular fa-user"></i> Login
             </Nav.Link>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
