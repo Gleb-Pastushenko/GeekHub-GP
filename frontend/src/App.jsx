@@ -9,6 +9,7 @@ import Payments from './pages/Payments.page';
 import UserProfile from './pages/UserProfile.page';
 import AdsLayout from './components/AdsLayout.component';
 import Services from './pages/Services.page';
+import Vacancies from './pages/Vacancies.page';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
               <Route index element={<Navigate to="sell" />} />
               <Route path="sell" element={<Sell />} />
               <Route path="services" element={<Services />} />
-              <Route path="vacancies" element={<Sell />} />
+              <Route path="vacancies" element={<Vacancies />} />
             </Route>
             <Route path="community" element={<Community />} />
             <Route path="about-us" element={<AboutUs />} />
