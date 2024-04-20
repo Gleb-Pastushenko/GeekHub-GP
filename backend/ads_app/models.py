@@ -28,6 +28,13 @@ class SellAdImage(models.Model):
   image = models.ImageField(upload_to=sell_ads_upload_path)
 
 
+@receiver(models.signals.post_delete, sender=SellAdImage)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+  if instance.image:
+    if os.path.isfile(instance.image.path):
+      os.remove(instance.image.path)
+
+
 class ServiceAd(models.Model):
   title = models.CharField(max_length=100)
   text = models.TextField()
