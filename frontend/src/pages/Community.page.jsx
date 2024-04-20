@@ -46,7 +46,9 @@ const Community = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   // Utiliti functions
-  const getData = () => {
+  const getData = async () => {
+    fetch('api/users')
+
     setUsers(usersList);
     setFilteredUsers(usersList);
   };
