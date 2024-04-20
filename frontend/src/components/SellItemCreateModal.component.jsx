@@ -30,6 +30,7 @@ const SellItemCreateModal = (_props) => {
   }
 
   const resetStates = () => {
+    setFormValidated(false);
     setTitle('');
     setText('');
     setSelectedFiles([]);
@@ -49,8 +50,7 @@ const SellItemCreateModal = (_props) => {
   const appendSelectedFiles = (files) => {
     const selectedFileNames = selectedFiles.map(file => file.name);
     const newFiles = files.filter(file => !selectedFileNames.includes(file.name));
-
-    setSelectedFiles((currentFiles) => [...currentFiles, ...newFiles]);
+    setSelectedFiles((currentFiles) => [...currentFiles, ...newFiles.slice(0, 10 - currentFiles.length)]);
   }
 
   // Refreshing file input state, and file preview URLs
@@ -160,9 +160,11 @@ const SellItemCreateModal = (_props) => {
               name="image"
               ref={fileInputRef}
             />
+            <Form.Text>Залишилось {10 - selectedFiles.length}</Form.Text>
             <Form.Control.Feedback type="invalid">Завантажте хоча б одне фото!</Form.Control.Feedback>
-            <Button type="submit" className="mt-3">Зберегти</Button>
+
           </Form.Group>
+          <Button type="submit" className="mt-3">Зберегти</Button>
         </Form>
         <Row className="pt-3">
           {filePreviewURLs.map((imageURL, idx) => (
