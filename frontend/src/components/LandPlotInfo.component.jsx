@@ -10,7 +10,7 @@ const LandPlotInfo = ({ landPlot }) => {
       <ListGroup.Item>
         <Row>
           <Col xs={4} sm={3} md={4}>
-            {"Ел.енергія.:"}
+            {"Ел.енергія:"}
           </Col>
           <Col xs={8} sm={9} md={8}>
             {landPlot.electricity || '-'}
