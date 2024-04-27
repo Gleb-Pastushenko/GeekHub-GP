@@ -1,19 +1,28 @@
+import { useState, useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+
 
 const AdsLayout = () => {
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState('');
+
+  useEffect(() => {
+    setCurrentPage(location.pathname.split('/').slice(-1));
+  }, [location])
+
   return (
     <div>
-      <Nav className="pt-3 justify-content-center" variant="tabs" defaultActiveKey="sell">
+      <Nav className="pt-3 justify-content-center" variant="tabs" activeKey={currentPage}>
         <LinkContainer to="sell" eventKey="sell">
-          <Nav.Link>Продаж</Nav.Link>
+          <Nav.Link eventKey="sell">Продаж</Nav.Link>
         </LinkContainer>
         <LinkContainer to="services">
-          <Nav.Link>Послуги</Nav.Link>
+          <Nav.Link eventKey="services">Послуги</Nav.Link>
         </LinkContainer>
         <LinkContainer to="vacancies">
-          <Nav.Link>Вакансії</Nav.Link>
+          <Nav.Link eventKey="vacancies">Вакансії</Nav.Link>
         </LinkContainer>
       </Nav>
       <Outlet />
