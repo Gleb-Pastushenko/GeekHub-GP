@@ -4,24 +4,24 @@ from django.core.exceptions import ValidationError
 from loguru import logger
 from telebot.apihelper import ApiTelegramException
 
-AUTO_FILLED_IN = 'это поле автоматически заполнится'
+AUTO_FILLED_IN = 'this field will be filled in automatically'
 
 
 class BotConfig(models.Model):
     """ Base Telegram bot model """
-    title = models.CharField(verbose_name='Название Бота', max_length=100,
+    title = models.CharField(verbose_name='Bot Name', max_length=100,
                              blank=True, editable=False, default=AUTO_FILLED_IN)
-    link = models.URLField(verbose_name='Ссылка на бот', max_length=150,
+    link = models.URLField(verbose_name='Bot Url', max_length=150,
                            blank=True, editable=False, default=AUTO_FILLED_IN)
     username = models.CharField(max_length=100, blank=True, editable=False,
                                 default=AUTO_FILLED_IN)
     tid = models.CharField(max_length=100, blank=True, editable=False,
                            default=AUTO_FILLED_IN)
 
-    token = models.CharField(verbose_name='Токен Бота', max_length=150,
-                             help_text='вставьте токен, полученный у BotFather')
+    token = models.CharField(verbose_name='Bot TOKEN', max_length=150,
+                             help_text='insert the token obtained from BotFather')
     server_url = models.CharField(verbose_name='Webhook Url', max_length=200,
-                                  help_text='https://<название домена>')
+                                  help_text='https://<domen name>')
 
     is_active = models.BooleanField(default=True)
 
@@ -65,13 +65,13 @@ class BotConfig(models.Model):
         except ApiTelegramException as e:
             logger.debug(e)
             raise ValidationError(
-                'Неверный указан "Токен Бота" либо "Webhook Url"! '
-                'Исправьте ошибку и сохраните конфигурацию ещё раз.'
+                'Invalid "Bot Token" or "Webhook Url"!'
+                'Correct the error and save the configuration again.'
             )
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Настройки Telegram бота'
-        verbose_name_plural = 'Настройки Telegram ботов'
+        verbose_name = 'Telegram bot settings'
+        verbose_name_plural = 'Telegram bot settings'

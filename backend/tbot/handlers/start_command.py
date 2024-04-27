@@ -19,6 +19,6 @@ def text_messages(message: types.Message):
     )
 
     if created:
-        bot.send_message(user_id, f'Welcome {user.first_name}!')
+        bot.send_message(user_id, f'Привіт {user.first_name}! Це бот садового товариства "Лісова Поляна"!')
     else:
-        bot.send_message(user_id, f'Hello {user.first_name}!')
+        bot.send_message(user_id, f'Вітаю в товаристві {user.first_name}!')
