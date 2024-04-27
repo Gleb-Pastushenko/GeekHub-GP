@@ -25,6 +25,8 @@ urlpatterns = [
     path('api/', include('news_app.urls')),
     path('api/', include('ads_app.urls')),
     path('api/', include('community_app.urls')),
+    path('', include('tbot_base.urls')),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

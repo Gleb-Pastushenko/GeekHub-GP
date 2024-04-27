@@ -5,7 +5,7 @@ from rest_framework import status
 
 from .models import News
 from .serializers import NewsSerializer
-
+from tbot.services.telegram_broadcast import send_news_to_users
 
 class NewsView(APIView):
   def get(self, request, format=None):
@@ -17,6 +17,10 @@ class NewsView(APIView):
     serializer = NewsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        
+        news_id = serializer.instance.id
+        send_news_to_users(news_id)
+        
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

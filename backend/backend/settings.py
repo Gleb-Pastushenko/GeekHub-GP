@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)i6pjr%*=!6yvf13(fn2w$m6mqp^5bj^k&08kkv2fy&kw(uu64
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ['*'
 ]
 
 
@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'news_app',
     'ads_app',
     'community_app',
+    
+    'tbot_base',
+    'tbot'
 ]
 
 REST_FRAMEWORK = {
@@ -193,3 +196,7 @@ MEDIA_ROOT = 'static/images'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+BOT_HANDLERS = [
+    'tbot.handlers.start_command',
+]
