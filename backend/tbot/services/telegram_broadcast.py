@@ -3,8 +3,9 @@ from tbot.models import TelegramUser
 from news_app.models import News
 from backend.settings import STATIC_URL
 from django.utils import timezone
+from backend.celery import app
 
-
+@app.task(name='send_news_to_users')
 def send_news_to_users(news_id):
     users = TelegramUser.objects.all()
     news = News.objects.get(id=news_id)
