@@ -1,8 +1,7 @@
-celery==5.4.0
-django==5.0.4
+Django==5.0.4
 djangorestframework==3.15.1
 django-cors-headers==4.3.1
 djangorestframework-simplejwt==5.3.1
-loguru==0.7.2
 pillow==10.3.0
 pytelegrambotapi==4.17.0
+loguru==0.7.2
