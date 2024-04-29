@@ -19,7 +19,7 @@ class NewsView(APIView):
         serializer.save()
         
         news_id = serializer.instance.id
-        send_news_to_users(news_id)
+        send_news_to_users.delay(news_id)
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:

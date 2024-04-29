@@ -200,3 +200,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 BOT_HANDLERS = [
     'tbot.handlers.start_command',
 ]
+
+CELERY_BROKER_URL = 'amqps://sadlotcx:yUq_6VuEKrrSAqg7nInE8-7E9CGhZulT@albatross.rmq.cloudamqp.com/sadlotcx'
