@@ -20,4 +20,4 @@ def send_news_to_users(news_id):
     image_url = news.image.url
     with open(f'{STATIC_URL}{image_url}', 'rb') as photo:
         for user in users:
-            bot.send_photo(user.user_id, photo=photo, caption=news_caption, parse_mode='HTML')
+            bot.send_photo(user.user_id, photo=photo, caption=news_caption, parse_mode='HTML', timeout=60)
